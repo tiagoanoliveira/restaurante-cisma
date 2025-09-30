@@ -51,21 +51,19 @@ class CismaWebsite {
 
     // Parallax Scrolling (Mobile-Optimized)
     setupParallax() {
-        // Check if device supports smooth parallax
-        const supportsPassive = this.supportsPassiveEvents();
-        const isMobile = window.innerWidth <= 768;
+        const isMobile = window.innerWidth <= 600;
 
         if (isMobile) {
-            // Simplified parallax for mobile devices
+            // Minimal parallax for mobile devices
             this.setupMobileParallax();
         } else {
-            // Full parallax for desktop
-            this.setupDesktopParallax(supportsPassive);
+            // Full parallax for desktop only
+            this.setupDesktopParallax();
         }
     }
 
     setupMobileParallax() {
-        // Throttled scroll handler for mobile
+        // Very subtle parallax for mobile to prevent performance issues
         let ticking = false;
 
         const handleScroll = () => {
@@ -81,41 +79,40 @@ class CismaWebsite {
         window.addEventListener('scroll', handleScroll, { passive: true });
     }
 
-    setupDesktopParallax(supportsPassive) {
+    setupDesktopParallax() {
         const handleScroll = () => {
             requestAnimationFrame(() => {
-                this.updateParallax();
+                this.updateDesktopParallax();
             });
         };
 
-        const scrollOptions = supportsPassive ? { passive: true } : false;
-        window.addEventListener('scroll', handleScroll, scrollOptions);
+        window.addEventListener('scroll', handleScroll, { passive: true });
     }
 
     updateMobileParallax() {
         const scrollTop = window.pageYOffset;
-        const windowHeight = window.innerHeight;
 
-        // Hero parallax (reduced effect for mobile)
+        // Hero parallax only (very subtle)
         if (this.heroBackground) {
-            const heroOffset = scrollTop * 0.3;
+            const heroOffset = scrollTop * 0.2;
             this.heroBackground.style.transform = `translateY(${heroOffset}px)`;
         }
 
-        // Other parallax elements (minimal effect)
+        // Menu background subtle effect
         this.parallaxElements.forEach((element) => {
             const rect = element.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
             const isVisible = rect.bottom >= 0 && rect.top <= windowHeight;
 
-            if (isVisible) {
-                const speed = element.dataset.speed || 0.3;
-                const yPos = scrollTop * speed * 0.5; // Reduced for mobile
+            if (isVisible && element.closest('.menu-background')) {
+                const speed = 0.1;
+                const yPos = scrollTop * speed * 0.3;
                 element.style.transform = `translateY(${yPos}px)`;
             }
         });
     }
 
-    updateParallax() {
+    updateDesktopParallax() {
         const scrollTop = window.pageYOffset;
         const windowHeight = window.innerHeight;
 
@@ -125,15 +122,17 @@ class CismaWebsite {
             this.heroBackground.style.transform = `translateY(${heroOffset}px)`;
         }
 
-        // Parallax elements
+        // Parallax for menu background only (not gallery images)
         this.parallaxElements.forEach((element) => {
             const rect = element.getBoundingClientRect();
             const isVisible = rect.bottom >= 0 && rect.top <= windowHeight;
 
-            if (isVisible) {
-                const speed = parseFloat(element.dataset.speed) || 0.5;
-                const yPos = (rect.top + scrollTop) * speed - scrollTop;
-                element.style.transform = `translateY(${yPos * 0.1}px)`;
+            // Only apply to menu background, not gallery
+            if (isVisible && element.closest('.menu-background')) {
+                const speed = parseFloat(element.dataset.speed) || 0.3;
+                const elementTop = rect.top + scrollTop;
+                const yPos = (elementTop - scrollTop) * speed;
+                element.style.transform = `translateY(${yPos * 0.15}px)`;
             }
         });
     }
@@ -153,7 +152,7 @@ class CismaWebsite {
             }
 
             // Hide/show navbar on mobile
-            if (window.innerWidth <= 768) {
+            if (window.innerWidth <= 600) {
                 if (scrollTop > lastScrollTop && scrollTop > 100) {
                     this.navbar.style.transform = 'translateY(-100%)';
                 } else {
@@ -194,7 +193,7 @@ class CismaWebsite {
         ctaButtons.forEach(button => {
             button.addEventListener('click', (e) => {
                 const href = button.getAttribute('href');
-                if (href.startsWith('#')) {
+                if (href.startsWith('#') && href.length > 1) {
                     e.preventDefault();
                     const targetId = href.substring(1);
                     const targetElement = document.getElementById(targetId);
@@ -225,24 +224,33 @@ class CismaWebsite {
 
     setupLazyLoading() {
         const images = document.querySelectorAll('img[data-src]');
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.removeAttribute('data-src');
-                    observer.unobserve(img);
-                }
-            });
-        });
 
-        images.forEach(img => imageObserver.observe(img));
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            images.forEach(img => imageObserver.observe(img));
+        } else {
+            // Fallback for browsers without IntersectionObserver
+            images.forEach(img => {
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+            });
+        }
     }
 
     preloadCriticalImages() {
         const criticalImages = [
             'resources/interior_fundo.jpg',
-            'resources/chefs.png'
+            'resources/logo.png'
         ];
 
         criticalImages.forEach(src => {
@@ -261,43 +269,39 @@ class CismaWebsite {
             this.parallaxElements.forEach(element => {
                 element.style.transform = 'none';
             });
+            if (this.heroBackground) {
+                this.heroBackground.style.transform = 'none';
+            }
         }
     }
 
-    // Utility Functions
-    supportsPassiveEvents() {
-        let supportsPassive = false;
-        try {
-            const opts = Object.defineProperty({}, 'passive', {
-                get: function() {
-                    supportsPassive = true;
-                }
-            });
-            window.addEventListener('testPassive', null, opts);
-            window.removeEventListener('testPassive', null, opts);
-        } catch (e) {}
-        return supportsPassive;
-    }
-
-    // Intersection Observer for animations
+    // Intersection Observer for scroll animations
     setupScrollAnimations() {
-        const animateElements = document.querySelectorAll('.menu-item, .gallery-item, .contact-item');
+        const animateElements = document.querySelectorAll('.menu-item, .contact-item');
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            animateElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(30px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(element);
             });
-        }, { threshold: 0.1 });
-
-        animateElements.forEach(element => {
-            element.style.opacity = '0';
-            element.style.transform = 'translateY(30px)';
-            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(element);
-        });
+        } else {
+            // Fallback: show elements immediately
+            animateElements.forEach(element => {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            });
+        }
     }
 }
 
@@ -319,7 +323,6 @@ class ContactForm {
 
     async handleSubmit() {
         const formData = new FormData(this.form);
-        // Handle form submission
         console.log('Form submitted:', Object.fromEntries(formData));
     }
 }
@@ -332,18 +335,15 @@ class ReservationWidget {
     }
 
     init() {
-        // Placeholder for The Fork widget integration
-        // This will be replaced with actual The Fork widget code
         this.setupPlaceholder();
     }
 
     setupPlaceholder() {
         if (this.widgetContainer) {
-            // Add click-to-call functionality
+            // Add click-to-call functionality tracking
             const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
             phoneLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    // Analytics tracking for phone calls
+                link.addEventListener('click', () => {
                     console.log('Phone call initiated');
                 });
             });
@@ -380,7 +380,6 @@ class DeliveryIntegration {
 
     trackDeliveryClick(platform) {
         console.log(`Delivery click: ${platform}`);
-        // Add analytics tracking here
     }
 }
 
@@ -395,7 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Setup scroll animations
     website.setupScrollAnimations();
 
-    // Handle window resize
+    // Handle window resize - reinitialize parallax
     let resizeTimer;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
@@ -404,26 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
             website.setupParallax();
         }, 250);
     });
-
-    // Service Worker registration (for better performance)
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js')
-                .then(registration => console.log('SW registered'))
-                .catch(registrationError => console.log('SW registration failed'));
-        });
-    }
 });
-
-// Google Maps Integration (to be added)
-function initGoogleMap() {
-    // Google Maps initialization will go here
-    const mapContainer = document.getElementById('map-placeholder');
-    if (mapContainer) {
-        // Replace placeholder with actual map
-        console.log('Google Maps would be initialized here');
-    }
-}
 
 // Export for module usage
 if (typeof module !== 'undefined' && module.exports) {
