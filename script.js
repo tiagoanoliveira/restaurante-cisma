@@ -16,7 +16,7 @@ function loadHTML(id, url) {
 }
 
 function loadFeaturedMenuItems() {
-    fetch('../menu/menu.html')
+    fetch('./menu/menu.html')
     .then(response => response.text())
     .then(html => {
         const tempDiv = document.createElement('div');
@@ -38,7 +38,7 @@ function loadFeaturedMenuItems() {
 function loadAllMenuItems() {
     const container = document.getElementById('all-menu-items');
     if (container) {
-        fetch('../menu/menu.html')
+        fetch('./menu/menu.html')
         .then(response => response.text())
         .then(html => {
             container.innerHTML = html;
@@ -52,8 +52,8 @@ function loadAllMenuItems() {
 // ===== INICIALIZAÇÃO AUTOMÁTICA =====
 function initializePage() {
     // Carregar header e footer (presente em todas as páginas)
-    loadHTML('header-placeholder', '../headers/header.html');
-    loadHTML('footer-placeholder', '../headers/footer.html');
+    loadHTML('header-placeholder', './headers/header.html');
+    loadHTML('footer-placeholder', './headers/footer.html');
     
     // Carregar menu conforme a página
     const featuredContainer = document.getElementById('featured-menu-items');
