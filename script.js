@@ -1,184 +1,129 @@
-// CISMA Matosinhos Website JavaScript
-// Mobile-optimized parallax scrolling and interactive elements
+// ===== FUNÇÕES UTILITÁRIAS (DRY - Don't Repeat Yourself) =====
+function loadHTML(id, url) {
+    fetch(url)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Falha ao carregar o arquivo: ' + url);
+        }
+        return response.text();
+    })
+    .then(data => {
+        document.getElementById(id).innerHTML = data;
+    })
+    .catch(error => {
+        console.error(error);
+    });
+}
 
+function loadFeaturedMenuItems() {
+    fetch('menu/menu.html')
+    .then(response => response.text())
+    .then(html => {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
+        const featuredItems = tempDiv.querySelectorAll('.menu-item[data-top="true"]');
+        const container = document.getElementById('featured-menu-items');
+        
+        if (container) {
+            featuredItems.forEach(item => {
+                container.appendChild(item.cloneNode(true));
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao carregar itens do menu:', error);
+    });
+}
+
+function loadAllMenuItems() {
+    const container = document.getElementById('all-menu-items');
+    if (container) {
+        fetch('/menu/menu.html')
+        .then(response => response.text())
+        .then(html => {
+            container.innerHTML = html;
+        })
+        .catch(error => {
+            console.error('Erro ao carregar itens do menu:', error);
+        });
+    }
+}
+
+// ===== INICIALIZAÇÃO AUTOMÁTICA =====
+function initializePage() {
+    // Carregar header e footer (presente em todas as páginas)
+    loadHTML('header-placeholder', '/headers/header.html');
+    loadHTML('footer-placeholder', '/headers/footer.html');
+    
+    // Carregar menu conforme a página
+    const featuredContainer = document.getElementById('featured-menu-items');
+    const allMenuContainer = document.getElementById('all-menu-items');
+    
+    if (featuredContainer) {
+        loadFeaturedMenuItems();
+    }
+    
+    if (allMenuContainer) {
+        loadAllMenuItems();
+    }
+}
+
+// ===== CÓDIGO PRINCIPAL SIMPLIFICADO =====
 class CismaWebsite {
     constructor() {
         this.navbar = document.getElementById('navbar');
         this.mobileMenu = document.getElementById('mobile-menu');
         this.navMenu = document.getElementById('nav-menu');
-        this.navLinks = document.querySelectorAll('.nav-link');
-        this.parallaxElements = document.querySelectorAll('.parallax-element');
-        this.heroBackground = document.getElementById('hero-bg');
-
         this.init();
     }
 
     init() {
-        this.setupNavigation();
-        this.setupParallax();
+        if (this.navbar && this.mobileMenu && this.navMenu) {
+            this.setupNavigation();
+        }
         this.setupScrollEffects();
         this.setupSmoothScrolling();
-        this.optimizePerformance();
+        this.setupLazyLoading();
     }
 
-    // Mobile Navigation
     setupNavigation() {
-        // Mobile menu toggle
         this.mobileMenu.addEventListener('click', () => {
             this.mobileMenu.classList.toggle('active');
             this.navMenu.classList.toggle('active');
-            document.body.classList.toggle('menu-open');
         });
 
-        // Close mobile menu when clicking nav links
-        this.navLinks.forEach(link => {
+        document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 this.mobileMenu.classList.remove('active');
                 this.navMenu.classList.remove('active');
-                document.body.classList.remove('menu-open');
             });
         });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!this.navbar.contains(e.target) && this.navMenu.classList.contains('active')) {
-                this.mobileMenu.classList.remove('active');
-                this.navMenu.classList.remove('active');
-                document.body.classList.remove('menu-open');
-            }
-        });
     }
 
-    // Parallax Scrolling (Mobile-Optimized)
-    setupParallax() {
-        const isMobile = window.innerWidth <= 600;
-
-        if (isMobile) {
-            // Minimal parallax for mobile devices
-            this.setupMobileParallax();
-        } else {
-            // Full parallax for desktop only
-            this.setupDesktopParallax();
-        }
-    }
-
-    setupMobileParallax() {
-        // Very subtle parallax for mobile to prevent performance issues
-        let ticking = false;
-
-        const handleScroll = () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    this.updateMobileParallax();
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-    }
-
-    setupDesktopParallax() {
-        const handleScroll = () => {
-            requestAnimationFrame(() => {
-                this.updateDesktopParallax();
-            });
-        };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-    }
-
-    updateMobileParallax() {
-        const scrollTop = window.pageYOffset;
-
-        // Hero parallax only (very subtle)
-        if (this.heroBackground) {
-            const heroOffset = scrollTop * 0.2;
-            this.heroBackground.style.transform = `translateY(${heroOffset}px)`;
-        }
-
-        // Menu background subtle effect
-        this.parallaxElements.forEach((element) => {
-            const rect = element.getBoundingClientRect();
-            const windowHeight = window.innerHeight;
-            const isVisible = rect.bottom >= 0 && rect.top <= windowHeight;
-
-            if (isVisible && element.closest('.menu-background')) {
-                const speed = 0.1;
-                const yPos = scrollTop * speed * 0.3;
-                element.style.transform = `translateY(${yPos}px)`;
-            }
-        });
-    }
-
-    updateDesktopParallax() {
-        const scrollTop = window.pageYOffset;
-        const windowHeight = window.innerHeight;
-
-        // Hero parallax effect
-        if (this.heroBackground) {
-            const heroOffset = scrollTop * 0.5;
-            this.heroBackground.style.transform = `translateY(${heroOffset}px)`;
-        }
-
-        // Parallax for menu background only (not gallery images)
-        this.parallaxElements.forEach((element) => {
-            const rect = element.getBoundingClientRect();
-            const isVisible = rect.bottom >= 0 && rect.top <= windowHeight;
-
-            // Only apply to menu background, not gallery
-            if (isVisible && element.closest('.menu-background')) {
-                const speed = parseFloat(element.dataset.speed) || 0.3;
-                const elementTop = rect.top + scrollTop;
-                const yPos = (elementTop - scrollTop) * speed;
-                element.style.transform = `translateY(${yPos * 0.15}px)`;
-            }
-        });
-    }
-
-    // Scroll Effects
     setupScrollEffects() {
-        let lastScrollTop = 0;
-
-        const handleScroll = () => {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-            // Navbar background on scroll
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset;
+            
             if (scrollTop > 100) {
-                this.navbar.classList.add('scrolled');
+                this.navbar?.classList.add('scrolled');
             } else {
-                this.navbar.classList.remove('scrolled');
+                this.navbar?.classList.remove('scrolled');
             }
-
-            // Hide/show navbar on mobile
-            if (window.innerWidth <= 600) {
-                if (scrollTop > lastScrollTop && scrollTop > 100) {
-                    this.navbar.style.transform = 'translateY(-100%)';
-                } else {
-                    this.navbar.style.transform = 'translateY(0)';
-                }
-            }
-
-            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-        };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
+            
+            lastScroll = scrollTop;
+        }, { passive: true });
     }
 
-    // Smooth Scrolling
     setupSmoothScrolling() {
-        // Smooth scroll for anchor links
-        this.navLinks.forEach(link => {
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
             link.addEventListener('click', (e) => {
                 const href = link.getAttribute('href');
-                if (href.startsWith('#')) {
+                if (href.length > 1) {
                     e.preventDefault();
-                    const targetId = href.substring(1);
-                    const targetElement = document.getElementById(targetId);
-
-                    if (targetElement) {
-                        const offsetTop = targetElement.offsetTop - this.navbar.offsetHeight;
+                    const target = document.querySelector(href);
+                    if (target) {
+                        const offsetTop = target.offsetTop - (this.navbar?.offsetHeight || 0);
                         window.scrollTo({
                             top: offsetTop,
                             behavior: 'smooth'
@@ -187,46 +132,13 @@ class CismaWebsite {
                 }
             });
         });
-
-        // Smooth scroll for call-to-action buttons
-        const ctaButtons = document.querySelectorAll('a[href^="#"]');
-        ctaButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                const href = button.getAttribute('href');
-                if (href.startsWith('#') && href.length > 1) {
-                    e.preventDefault();
-                    const targetId = href.substring(1);
-                    const targetElement = document.getElementById(targetId);
-
-                    if (targetElement) {
-                        const offsetTop = targetElement.offsetTop - this.navbar.offsetHeight;
-                        window.scrollTo({
-                            top: offsetTop,
-                            behavior: 'smooth'
-                        });
-                    }
-                }
-            });
-        });
-    }
-
-    // Performance Optimizations
-    optimizePerformance() {
-        // Lazy loading for images
-        this.setupLazyLoading();
-
-        // Preload critical images
-        this.preloadCriticalImages();
-
-        // Optimize animations for mobile
-        this.optimizeAnimations();
     }
 
     setupLazyLoading() {
         const images = document.querySelectorAll('img[data-src]');
-
+        
         if ('IntersectionObserver' in window) {
-            const imageObserver = new IntersectionObserver((entries, observer) => {
+            const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         const img = entry.target;
@@ -236,176 +148,19 @@ class CismaWebsite {
                     }
                 });
             });
-
-            images.forEach(img => imageObserver.observe(img));
+            
+            images.forEach(img => observer.observe(img));
         } else {
-            // Fallback for browsers without IntersectionObserver
             images.forEach(img => {
                 img.src = img.dataset.src;
                 img.removeAttribute('data-src');
             });
         }
     }
-
-    preloadCriticalImages() {
-        const criticalImages = [
-            'resources/interior_fundo.jpg',
-            'resources/logo.png'
-        ];
-
-        criticalImages.forEach(src => {
-            const img = new Image();
-            img.src = src;
-        });
-    }
-
-    optimizeAnimations() {
-        // Reduce motion for users who prefer it
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        if (prefersReducedMotion) {
-            document.documentElement.style.setProperty('--transition', 'none');
-            // Disable parallax for reduced motion
-            this.parallaxElements.forEach(element => {
-                element.style.transform = 'none';
-            });
-            if (this.heroBackground) {
-                this.heroBackground.style.transform = 'none';
-            }
-        }
-    }
-
-    // Intersection Observer for scroll animations
-    setupScrollAnimations() {
-        const animateElements = document.querySelectorAll('.menu-item, .contact-item');
-
-        if ('IntersectionObserver' in window) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            animateElements.forEach(element => {
-                element.style.opacity = '0';
-                element.style.transform = 'translateY(30px)';
-                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                observer.observe(element);
-            });
-        } else {
-            // Fallback: show elements immediately
-            animateElements.forEach(element => {
-                element.style.opacity = '1';
-                element.style.transform = 'translateY(0)';
-            });
-        }
-    }
 }
 
-// Contact Form Enhancement (if needed later)
-class ContactForm {
-    constructor() {
-        this.form = document.getElementById('contact-form');
-        if (this.form) {
-            this.init();
-        }
-    }
-
-    init() {
-        this.form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.handleSubmit();
-        });
-    }
-
-    async handleSubmit() {
-        const formData = new FormData(this.form);
-        console.log('Form submitted:', Object.fromEntries(formData));
-    }
-}
-
-// The Fork Widget Integration
-class ReservationWidget {
-    constructor() {
-        this.widgetContainer = document.getElementById('thefork-widget');
-        this.init();
-    }
-
-    init() {
-        this.setupPlaceholder();
-    }
-
-    setupPlaceholder() {
-        if (this.widgetContainer) {
-            // Add click-to-call functionality tracking
-            const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
-            phoneLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    console.log('Phone call initiated');
-                });
-            });
-        }
-    }
-}
-
-// Delivery Integration
-class DeliveryIntegration {
-    constructor() {
-        this.deliveryLinks = document.querySelectorAll('.delivery-option');
-        this.init();
-    }
-
-    init() {
-        this.deliveryLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const platform = link.querySelector('img').alt;
-                this.trackDeliveryClick(platform);
-
-                // Open delivery platform (replace with actual URLs)
-                const deliveryUrls = {
-                    'Uber Eats': 'https://www.ubereats.com/pt/store/cisma-matosinhos',
-                    'Glovo': 'https://glovoapp.com/pt/pt/porto/cisma-matosinhos'
-                };
-
-                if (deliveryUrls[platform]) {
-                    window.open(deliveryUrls[platform], '_blank');
-                }
-            });
-        });
-    }
-
-    trackDeliveryClick(platform) {
-        console.log(`Delivery click: ${platform}`);
-    }
-}
-
-// Initialize everything when DOM is loaded
+// ===== INICIALIZAÇÃO =====
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize main website functionality
-    const website = new CismaWebsite();
-    const reservationWidget = new ReservationWidget();
-    const deliveryIntegration = new DeliveryIntegration();
-    const contactForm = new ContactForm();
-
-    // Setup scroll animations
-    website.setupScrollAnimations();
-
-    // Handle window resize - reinitialize parallax
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-            // Reinitialize parallax on resize
-            website.setupParallax();
-        }, 250);
-    });
+    initializePage();
+    new CismaWebsite();
 });
-
-// Export for module usage
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { CismaWebsite, ContactForm, ReservationWidget, DeliveryIntegration };
-}
