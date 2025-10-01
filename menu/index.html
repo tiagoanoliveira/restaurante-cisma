@@ -3,38 +3,61 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Menu CISMA</title>
-        <link rel="shortcut icon" href="/resources/images/restaurant/logo-square.jpg">
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="/styles.css">
-        <meta name="description" content="Menu Restaurante CISMA Matosinhos">
+        <meta name="description" content="CISMA Matosinhos - Restaurante de alta gastronomia.">
     </head>
     <body>
         <!-- Header -->
-        <header id="header-placeholder"></header>
-        <!-- Menu Section -->
+        <div id="header-placeholder"></div>
+               <!-- Menu Section -->
         <section id="menu" class="menu">
             <div class="menu-background parallax-element" data-speed="0.3">
-                <img src="/resources/images/restaurant/interior_esquerda.jpg" alt="Interior CISMA">
+                <img src="/resources/interior_esquerda.jpg" alt="Interior CISMA">
             </div>
-            <div id="menu-page" class="container">
+            <div class="container">
                 <h2 class="section-title">Menu Cisma</h2>
-                <div class="filter-container">
-                    <div class="filter-buttons">
-                        <a href="#entradas-section" class="filter-btn active">Entradas</a>
-                        <a href="#principais-section" class="filter-btn">Pratos Principais</a>
-                        <a href="#infantil-section" class="filter-btn">Menu Infantil</a>
-                        <a href="#sobremesas-section" class="filter-btn">Sobremesas</a>
-                        <a href="#bebidas-section" class="filter-btn">Bebidas</a>
-                    </div>
-                </div>
                 <div class="menu-grid">
-                    <div class="menu-category" id="all-menu-items">
-                        <!-- Todos os itens serão carregados aqui -->                   
+                    <div class="menu-category">
+                        <h3>Pratos Principais</h3>
+                        <div id="all-menu-items">
+                            <!-- Todos os itens serão carregados aqui -->
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
         <footer id="footer-placeholder"></footer>
     </body>
-    <script src="/script.js"></script>
+    <script>
+        function loadHTML(id, url) {
+            fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Falha ao carregar o arquivo: ' + url);
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById(id).innerHTML = data;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        }
+
+        function loadAllMenuItems() {
+            fetch('/menu/menu.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('all-menu-items').innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Erro ao carregar itens do menu:', error);
+            });
+        }
+        loadHTML('header-placeholder', '/headers/header.html');
+        loadHTML('footer-placeholder', '/headers/footer.html');
+        loadAllMenuItems();
+    </script>
 </html>
