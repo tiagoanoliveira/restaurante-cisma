@@ -1,251 +1,221 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurante CISMA Matosinhos</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <meta name="description" content="CISMA Matosinhos - Restaurante de alta gastronomia com chef Pedro Gonçalves. Reservas, menu exclusivo e delivery disponível.">
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <a href="#home">
-                    <img src="resources/logo.png" alt="CISMA Matosinhos Logo" class="logo-image">
-                </a>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Restaurante CISMA Matosinhos</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="styles.css">
+        <meta name="description" content="CISMA Matosinhos - Restaurante de alta gastronomia com chef Pedro Gonçalves. Reservas, menu exclusivo e delivery disponível.">
+    </head>
+    <body>
+        <!-- Header -->
+        <div id="header-placeholder"></div>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-background" id="hero-bg">
+                <img src="resources/interior_fundo.jpg" alt="Interior CISMA" class="hero-image">
             </div>
-            <div class="nav-menu" id="nav-menu">
-                <a href="#home" class="nav-link">Início</a>
-                <a href="#story" class="nav-link">Nossa História</a>
-                <a href="#menu" class="nav-link">Menu</a>
-                <a href="#gallery" class="nav-link">Galeria</a>
-                <a href="#contact" class="nav-link">Contacto</a>
-            </div>
-            <div class="nav-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-background" id="hero-bg">
-            <img src="resources/interior_fundo.jpg" alt="Interior CISMA" class="hero-image">
-        </div>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1 class="hero-title">CISMA</h1>
-            <p class="hero-subtitle">Matosinhos</p>
-            <p class="hero-description">Uma extensão da nossa sala de jantar e do prazer que temos em receber</p>
-            <div class="hero-buttons">
-                <a href="#reservations" class="btn btn-primary">Reservar Mesa</a>
-                <a href="#menu" class="btn btn-secondary">Ver Menu</a>
-            </div>
-        </div>
-        <div class="scroll-indicator">
-            <div class="scroll-arrow"></div>
-        </div>
-    </section>
-
-    <!-- Story Section -->
-    <section id="story" class="story">
-        <div class="container">
-            <div class="story-grid">
-                <div class="story-text">
-                    <h2 class="section-title">A Nossa História</h2>
-                    <div class="story-content">
-                        <p>Antes ligados ao ramo da construção, quisemos mudar de vida e avançar com um projeto a dois, ligado aos prazeres à mesa. O cisma pretende ser uma extensão da nossa sala de jantar e do prazer que temos em receber.</p>
-
-                        <p>A data de conclusão das obras não podia falhar. Foi aqui que em Setembro de 2018, casamos e assinamos o duplo compromisso, pessoal e profissional, perante os nossos amigos e familiares.</p>
-
-                        <p>Neste caminho encontramos o chef Pedro Gonçalves que passou por vários países até nos chegar. Alemanha, Inglaterra, Holanda e Portugal, claro.</p>
-
-                        <p>Entrou na nossa família e também já é o seu projeto. Jovem e promissor chef de uma bondade e paixão que se sentem nos seus pratos.</p>
-
-                        <p class="story-highlight">Porque é impossível explicar em poucos parágrafos como pode uma cisma a três juntar-nos a todos aqui, esperamos que os próximos momentos o façam por nós.</p>
-                    </div>
-                </div>
-                <div class="story-image">
-                    <img src="resources/chefs.png" alt="Chef Pedro Gonçalves e equipa CISMA">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">CISMA</h1>
+                <p class="hero-subtitle">Matosinhos</p>
+                <p class="hero-description">Uma extensão da nossa sala de jantar e do prazer que temos em receber</p>
+                <div class="hero-buttons">
+                    <a href="#reservations" class="btn btn-primary">Reservar Mesa</a>
+                    <a href="#menu" class="btn btn-secondary">Ver Menu</a>
                 </div>
             </div>
-        </div>
-    </section>
+            <div class="scroll-indicator">
+                <div class="scroll-arrow"></div>
+            </div>
+        </section>
 
-    <!-- Menu Section -->
-    <section id="menu" class="menu">
-        <div class="menu-background parallax-element" data-speed="0.3">
-            <img src="resources/interior_esquerda.jpg" alt="Interior CISMA">
-        </div>
-        <div class="container">
-            <h2 class="section-title">Menu Cisma</h2>
-            <div class="menu-grid">
-                <div class="menu-category">
-                    <h3>Pratos Pincipais</h3>
-                    <div class="menu-items">
-                        <div class="menu-item">
-                            <div class="menu-item-image">
-                                <img src="resources/atum.png" alt="Atum">
-                            </div>
-                            <div class="menu-item-info">
-                                <h4>Atum Fresco Braseado</h4>
-                                <p>em crosta de sésamo, puré de batata doce e laranja siciliana, pleurothos, molho de miso caramelizado</p>
-                            </div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-image">
-                                <img src="resources/tartaro.png" alt="Tartaro">
-                            </div>
-                            <div class="menu-item-info">
-                                <h4>Tártaro de novilho</h4>
-                                <p>com mostarda dijon, alcaparras e alho negro</p>
-                            </div>
-                        </div>
-                        <div class="menu-item">
-                            <div class="menu-item-image">
-                                <img src="resources/pato.avif" alt="Pato">
-                            </div>
-                            <div class="menu-item-info">
-                                <h4>Magret de pato</h4>
-                                <p>com risoto de laranja e molho de cereja</p>
-                            </div>
+        <!-- Story Section -->
+        <section id="story" class="story">
+            <div class="container">
+                <div class="story-grid">
+                    <div class="story-text">
+                        <h2 class="section-title">A Nossa História</h2>
+                        <div class="story-content">
+                            <p>Antes ligados ao ramo da construção, quisemos mudar de vida e avançar com um projeto a dois, ligado aos prazeres à mesa. O cisma pretende ser uma extensão da nossa sala de jantar e do prazer que temos em receber.</p>
+
+                            <p>A data de conclusão das obras não podia falhar. Foi aqui que em Setembro de 2018, casamos e assinamos o duplo compromisso, pessoal e profissional, perante os nossos amigos e familiares.</p>
+
+                            <p>Neste caminho encontramos o chef Pedro Gonçalves que passou por vários países até nos chegar. Alemanha, Inglaterra, Holanda e Portugal, claro.</p>
+
+                            <p>Entrou na nossa família e também já é o seu projeto. Jovem e promissor chef de uma bondade e paixão que se sentem nos seus pratos.</p>
+
+                            <p class="story-highlight">Porque é impossível explicar em poucos parágrafos como pode uma cisma a três juntar-nos a todos aqui, esperamos que os próximos momentos o façam por nós.</p>
                         </div>
                     </div>
-                    <div class="menu-cta">
-                        <a href="#" class="btn btn-outline">Ver Menu Completo</a>
+                    <div class="story-image">
+                        <img src="resources/chefs.png" alt="Chef Pedro Gonçalves e equipa CISMA">
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Gallery Section -->
-    <section id="gallery" class="gallery">
-        <div class="container">
-            <h2 class="section-title">O Nosso Espaço</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item large">
-                    <img src="resources/interior.png" alt="Interior CISMA - Sala principal">
-                </div>
-                <div class="gallery-item">
-                    <img src="resources/interior_esquerda.jpg" alt="Interior CISMA - Vista lateral">
-                </div>
-                <div class="gallery-item">
-                    <img src="resources/interior_fundo.jpg" alt="Interior CISMA - Vista fundo">
-                </div>
+        <!-- Menu Section -->
+        <section id="menu" class="menu">
+            <div class="menu-background parallax-element" data-speed="0.3">
+                <img src="resources/interior_esquerda.jpg" alt="Interior CISMA">
             </div>
-        </div>
-    </section>
-
-    <!-- Reservations Section -->
-    <section id="reservations" class="reservations">
-        <div class="container">
-            <div class="reservations-content">
-                <h2 class="section-title">Reserve a sua mesa</h2>
-                <p>Desfrute de uma experiência gastronómica única no coração de Matosinhos</p>
-
-                <!-- The Fork Widget Container -->
-                <div class="reservation-widget">
-                    <div id="thefork-widget">
-                        <!-- The Fork widget will be inserted here -->
-                        <p class="widget-placeholder">Widget de reservas The Fork será integrado aqui</p>
-                        <a href="tel:+351224951503" class="btn btn-primary">Ligar para Reservar</a>
+            <div class="container">
+                <h2 class="section-title">Menu Cisma</h2>
+                <div class="menu-grid">
+                    <div class="menu-category">
+                        <div class="menu-items" id="featured-menu-items">
+                            <!-- Os itens em destaque serão carregados aqui -->
+                        </div>
+                        <div class="menu-cta">
+                            <a href="menu/index.html" class="btn btn-outline">Ver Menu Completo</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Delivery Section -->
-    <section id="delivery" class="delivery">
-        <div class="container">
-            <h2 class="section-title">Entrega e Take-Away</h2>
-            <p>Desfrute dos nossos pratos no conforto da sua casa</p>
-            <div class="delivery-options">
-                <a href="#" class="delivery-option">
-                    <img src="resources/uber-eats.svg" alt="Uber Eats" class="delivery-logo">
-                    <span>Pedir no Uber Eats</span>
-                </a>
-                <a href="#" class="delivery-option">
-                    <img src="resources/glovo.svg" alt="Glovo" class="delivery-logo">
-                    <span>Pedir no Glovo</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="contact-grid">
-                <div class="contact-details">
-                    <div class="contact-item">
-                        <h2 class="section-title">Contactos</h2>
-                        <h4>Morada</h4>
-                        <p>Roberto Ivens, nº 1273<br>4450-257 Matosinhos</p>
-                        <a href="https://www.google.com/maps/dir/?api=1&destination=Roberto+Ivens+1273,+4450-257+Matosinhos,+Portugal" 
-                            target="_blank" 
-                            class="btn btn-directions">
-                            <img src="resources/directions.png" alt="Direções" class="btn-icon"> Obter direções
-                        </a>
-                        <h4>Telefone</h4>
-                        <p><a href="tel:+351224951503">224 951 503</a></p>
-                        <h4>Email</h4>
-                        <p><a href="mailto:info@cismamatosinhos.pt">reservas@cisma.com.pt</a></p>
+        <!-- Gallery Section -->
+        <section id="gallery" class="gallery">
+            <div class="container">
+                <h2 class="section-title">O Nosso Espaço</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item large">
+                        <img src="resources/interior.png" alt="Interior CISMA - Sala principal">
                     </div>
-                    <div class="contact-item">
-                        <h4>Horário</h4>
-                        <p>Almoços:<br>Seg. a Sáb.: 12:00 - 15:00</p>
-                        <p>Jantares:<br>Seg., Sex. e Sáb.: 19:30 - 22:00</p>
-                        <p>Domingo: Encerrado</p>
+                    <div class="gallery-item">
+                        <img src="resources/interior_esquerda.jpg" alt="Interior CISMA - Vista lateral">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="resources/interior_fundo.jpg" alt="Interior CISMA - Vista fundo">
                     </div>
                 </div>
-                <div class="contact-map">
-                    <iframe 
-                        src="https://maps.google.com/maps?q=Rua+Roberto+Ivens+1273,Matosinhos,Portugal&output=embed"
-                        width="100%" 
-                        height="100%" 
-                        style="border:0; border-radius: 10px;" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade"
-                        title="Localização CISMA Matosinhos">
-                    </iframe>
-                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="resources/logo.png" alt="CISMA Logo" class="footer-logo">
-                </div>
-                <div class="footer-links">
-                    <a href="#story">História</a>
-                    <a href="#menu">Menu</a>
-                    <a href="#contact">Contacto</a>
-                </div>
-                <div class="footer-social">
-                    <a href="#" aria-label="Instagram">📸</a>
-                    <a href="#" aria-label="Facebook">📘</a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 CISMA Matosinhos. Website feito com ❤️ por <a href="https://www.linkedin.com/in/tiagoalexoliveira/">Tiago Oliveira</a>. Todos os direitos reservados.</p>
-            </div>
-        </div>
-    </footer>
+        <!-- Reservations Section -->
+        <section id="reservations" class="reservations">
+            <div class="container">
+                <div class="reservations-content">
+                    <h2 class="section-title">Reserve a sua mesa</h2>
+                    <p>Desfrute de uma experiência gastronómica única no coração de Matosinhos</p>
 
-    <script src="script.js"></script>
-</body>
+                    <!-- The Fork Widget Container -->
+                    <div class="reservation-widget">
+                        <div id="thefork-widget">
+                            <!-- The Fork widget will be inserted here -->
+                            <p class="widget-placeholder">Widget de reservas The Fork será integrado aqui</p>
+                            <a href="tel:+351224951503" class="btn btn-primary">Ligar para Reservar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Delivery Section -->
+        <section id="delivery" class="delivery">
+            <div class="container">
+                <h2 class="section-title">Entrega e Take-Away</h2>
+                <p>Desfrute dos nossos pratos no conforto da sua casa</p>
+                <div class="delivery-options">
+                    <a href="#" class="delivery-option">
+                        <img src="resources/uber-eats.svg" alt="Uber Eats" class="delivery-logo">
+                        <span>Pedir no Uber Eats</span>
+                    </a>
+                    <a href="#" class="delivery-option">
+                        <img src="resources/glovo.svg" alt="Glovo" class="delivery-logo">
+                        <span>Pedir no Glovo</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <h2 class="section-title">Contactos</h2>
+                            <h4>Morada</h4>
+                            <p>Roberto Ivens, nº 1273<br>4450-257 Matosinhos</p>
+                            <a href="https://www.google.com/maps/dir/?api=1&destination=Roberto+Ivens+1273,+4450-257+Matosinhos,+Portugal" 
+                                target="_blank" 
+                                class="btn btn-directions">
+                                <img src="resources/directions.png" alt="Direções" class="btn-icon"> Obter direções
+                            </a>
+                            <h4>Telefone</h4>
+                            <p><a href="tel:+351224951503">224 951 503</a></p>
+                            <h4>Email</h4>
+                            <p><a href="mailto:info@cismamatosinhos.pt">reservas@cisma.com.pt</a></p>
+                        </div>
+                        <div class="contact-item">
+                            <h4>Horário</h4>
+                            <p>Almoços:<br>Seg. a Sáb.: 12h-15h</p>
+                            <p>Jantares:<br>Seg., Sex. e Sáb.: 19h30-22h</p>
+                            <p>Domingo: Encerrado</p>
+                        </div>
+                    </div>
+                    <div class="contact-map">
+                        <iframe 
+                            src="https://maps.google.com/maps?q=Rua+Roberto+Ivens+1273,Matosinhos,Portugal&output=embed"
+                            width="100%" 
+                            height="100%" 
+                            style="border:0; border-radius: 10px;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Localização CISMA Matosinhos">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer id="footer-placeholder"></footer>
+        <script src="script.js"></script>
+    </body>
+
+    <script>
+        function loadHTML(id, url) {
+            fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Falha ao carregar o arquivo: ' + url);
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById(id).innerHTML = data;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        }
+        function loadFeaturedMenuItems() {
+        fetch('menu/menu.html')
+        .then(response => response.text())
+        .then(html => {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            
+            // Filtrar apenas itens com data-featured="true"
+            const featuredItems = tempDiv.querySelectorAll('.menu-item[data-top="true"]');
+            const container = document.getElementById('featured-menu-items');
+            
+            featuredItems.forEach(item => {
+                container.appendChild(item.cloneNode(true));
+            });
+        })
+        .catch(error => {
+            console.error('Erro ao carregar itens do menu:', error);
+        });
+    }
+        loadHTML('header-placeholder', 'headers/header.html');
+        loadHTML('footer-placeholder', 'headers/footer.html');
+        loadFeaturedMenuItems();
+    </script>
+
 </html>
