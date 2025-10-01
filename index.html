@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Restaurante CISMA Matosinhos</title>
+        <link rel="shortcut icon" href="resources/images/restaurant/logo-square.jpg">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -12,11 +13,11 @@
     </head>
     <body>
         <!-- Header -->
-        <div id="header-placeholder"></div>
+        <header id="header-placeholder"></header>
         <!-- Hero Section -->
         <section id="home" class="hero">
             <div class="hero-background" id="hero-bg">
-                <img src="resources/interior_fundo.jpg" alt="Interior CISMA" class="hero-image">
+                <img src="resources/images/restaurant/interior_fundo.jpg" alt="Interior CISMA" class="hero-image">
             </div>
             <div class="hero-overlay"></div>
             <div class="hero-content">
@@ -25,7 +26,7 @@
                 <p class="hero-description">Uma extensão da nossa sala de jantar e do prazer que temos em receber</p>
                 <div class="hero-buttons">
                     <a href="#reservations" class="btn btn-primary">Reservar Mesa</a>
-                    <a href="#menu" class="btn btn-secondary">Ver Menu</a>
+                    <a href="menu/index.html" class="btn btn-secondary">Menu</a>
                 </div>
             </div>
             <div class="scroll-indicator">
@@ -52,7 +53,7 @@
                         </div>
                     </div>
                     <div class="story-image">
-                        <img src="resources/chefs.png" alt="Chef Pedro Gonçalves e equipa CISMA">
+                        <img src="resources/images/restaurant/chefs.png" alt="Chef Pedro Gonçalves e equipa CISMA">
                     </div>
                 </div>
             </div>
@@ -61,7 +62,7 @@
         <!-- Menu Section -->
         <section id="menu" class="menu">
             <div class="menu-background parallax-element" data-speed="0.3">
-                <img src="resources/interior_esquerda.jpg" alt="Interior CISMA">
+                <img src="resources/images/restaurant/interior_esquerda.jpg" alt="Interior CISMA">
             </div>
             <div class="container">
                 <h2 class="section-title">Menu Cisma</h2>
@@ -84,13 +85,13 @@
                 <h2 class="section-title">O Nosso Espaço</h2>
                 <div class="gallery-grid">
                     <div class="gallery-item large">
-                        <img src="resources/interior.png" alt="Interior CISMA - Sala principal">
+                        <img src="resources/images/restaurant/interior.png" alt="Interior CISMA - Sala principal">
                     </div>
                     <div class="gallery-item">
-                        <img src="resources/interior_esquerda.jpg" alt="Interior CISMA - Vista lateral">
+                        <img src="resources/images/restaurant/interior_esquerda.jpg" alt="Interior CISMA - Vista lateral">
                     </div>
                     <div class="gallery-item">
-                        <img src="resources/interior_fundo.jpg" alt="Interior CISMA - Vista fundo">
+                        <img src="resources/images/restaurant/interior_fundo.jpg" alt="Interior CISMA - Vista fundo">
                     </div>
                 </div>
             </div>
@@ -121,12 +122,12 @@
                 <h2 class="section-title">Entrega e Take-Away</h2>
                 <p>Desfrute dos nossos pratos no conforto da sua casa</p>
                 <div class="delivery-options">
-                    <a href="#" class="delivery-option">
-                        <img src="resources/uber-eats.svg" alt="Uber Eats" class="delivery-logo">
+                    <a href="https://www.ubereats.com/pt/store/cisma/mb4kjrfcR8CUdDqsyzKLxw?srsltid=AfmBOopfcVpnuPUH-lE8_U_YrLPD7C_8OnSSr4GC4Es7mHYeC5X3szrD" class="delivery-option">
+                        <img src="resources/images/delivery/uber-eats.svg" alt="Uber Eats" class="delivery-logo">
                         <span>Pedir no Uber Eats</span>
                     </a>
                     <a href="#" class="delivery-option">
-                        <img src="resources/glovo.svg" alt="Glovo" class="delivery-logo">
+                        <img src="resources/images/delivery/glovo.svg" alt="Glovo" class="delivery-logo">
                         <span>Pedir no Glovo</span>
                     </a>
                 </div>
@@ -145,7 +146,7 @@
                             <a href="https://www.google.com/maps/dir/?api=1&destination=Roberto+Ivens+1273,+4450-257+Matosinhos,+Portugal" 
                                 target="_blank" 
                                 class="btn btn-directions">
-                                <img src="resources/directions.png" alt="Direções" class="btn-icon"> Obter direções
+                                <img src="resources/images/delivery/directions.png" alt="Direções" class="btn-icon"> Obter direções
                             </a>
                             <h4>Telefone</h4>
                             <p><a href="tel:+351224951503">224 951 503</a></p>
@@ -177,45 +178,5 @@
         <footer id="footer-placeholder"></footer>
         <script src="script.js"></script>
     </body>
-
-    <script>
-        function loadHTML(id, url) {
-            fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Falha ao carregar o arquivo: ' + url);
-                }
-                return response.text();
-            })
-            .then(data => {
-                document.getElementById(id).innerHTML = data;
-            })
-            .catch(error => {
-                console.error(error);
-            });
-        }
-        function loadFeaturedMenuItems() {
-        fetch('menu/menu.html')
-        .then(response => response.text())
-        .then(html => {
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = html;
-            
-            // Filtrar apenas itens com data-featured="true"
-            const featuredItems = tempDiv.querySelectorAll('.menu-item[data-top="true"]');
-            const container = document.getElementById('featured-menu-items');
-            
-            featuredItems.forEach(item => {
-                container.appendChild(item.cloneNode(true));
-            });
-        })
-        .catch(error => {
-            console.error('Erro ao carregar itens do menu:', error);
-        });
-    }
-        loadHTML('header-placeholder', 'headers/header.html');
-        loadHTML('footer-placeholder', 'headers/footer.html');
-        loadFeaturedMenuItems();
-    </script>
-
+    <script src="/script.js"></script>
 </html>
