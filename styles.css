@@ -1,3 +1,5 @@
+@import url("menu/menu.css");
+
 /* CSS Reset and Base Styles */
 * {
     margin: 0;
@@ -40,7 +42,6 @@ body {
     color: var(--dark-gray);
     background-color: var(--white);
     overflow-x: hidden;
-    text-align: justify;
 }
 
 /* Container */
@@ -349,6 +350,7 @@ h1, h2, h3, h4 {
 
 .story-text {
     order: 2;
+    text-align: justify;
 }
 
 .story-content p {
@@ -396,91 +398,6 @@ h1, h2, h3, h4 {
     }
 }
 
-/* Menu Section */
-.menu {
-    padding: var(--section-padding);
-    position: relative;
-    background: var(--white);
-}
-
-.menu-background {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 50%;
-    height: 100%;
-    opacity: 0.1;
-    z-index: 1;
-}
-
-.menu-background img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    will-change: transform;
-}
-
-.menu .container {
-    position: relative;
-    z-index: 2;
-}
-
-.menu-category h3 {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    color: var(--shark-green-dark);
-    text-align: center;
-}
-
-.menu-items {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    margin-bottom: 3rem;
-}
-
-.menu-item {
-    display: flex;
-    gap: 1.5rem;
-    padding: 1.5rem;
-    background: var(--light-gray);
-    border-radius: 10px;
-    transition: var(--transition);
-}
-
-.menu-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(44, 93, 90, 0.15);
-}
-
-.menu-item-image {
-    flex-shrink: 0;
-    width: 100px;
-    height: 100px;
-}
-
-.menu-item-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-.menu-item-info h4 {
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
-    color: var(--shark-green-dark);
-}
-
-.menu-item-info p {
-    color: var(--dark-gray);
-    font-size: 0.95rem;
-}
-
-.menu-cta {
-    text-align: center;
-}
-
 /* Gallery Section */
 .gallery {
     padding: var(--section-padding);
@@ -516,18 +433,6 @@ h1, h2, h3, h4 {
 
 .gallery-item:hover img {
     transform: scale(1.05);
-}
-
-/* Mobile gallery improvements */
-@media (max-width: 600px) {
-    .gallery-item img {
-        min-height: 200px;
-        object-fit: cover;
-    }
-
-    .gallery-item.large img {
-        min-height: 300px;
-    }
 }
 
 /* Reservations Section */
@@ -656,15 +561,14 @@ h1, h2, h3, h4 {
 .footer {
     background: var(--shark-green-dark);
     color: var(--champagne);
-    padding: 2rem 0 1rem;
+    padding: 1rem 2rem 1rem;
 }
 
 .footer-content {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2rem;
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 0.5rem;
 }
 
 .footer-brand {
@@ -690,24 +594,26 @@ h1, h2, h3, h4 {
 .footer-links {
     display: flex;
     justify-content: center;
-    gap: 1.5rem;
+    margin-top: 1rem;
+    gap: 2rem;
     flex-wrap: wrap;
 }
 
-.footer-links a {
-    color: var(--champagne);
+.footer a {
+    color: var(--white);
     text-decoration: none;
     transition: var(--transition);
 }
 
-.footer-links a:hover {
-    color: var(--champagne-light);
+.footer a:hover {
+    color: var(--champagne-dark);
 }
 
 .footer-social {
     display: flex;
     justify-content: center;
     gap: 1rem;
+    margin-top: 0.5rem;
 }
 
 .footer-social a {
@@ -725,6 +631,17 @@ h1, h2, h3, h4 {
     padding-top: 1rem;
     border-top: 1px solid rgba(247, 231, 206, 0.2);
     font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.social-icon {
+    width: 24px;
+    height: 24px;
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
     opacity: 0.8;
 }
 
@@ -771,7 +688,14 @@ h1, h2, h3, h4 {
         flex-direction: column;
         align-items: center;
     }
+    .gallery-item img {
+        min-height: 200px;
+        object-fit: cover;
+    }
 
+    .gallery-item.large img {
+        min-height: 300px;
+    }
     .btn {
         width: 250px;
         max-width: 100%;
@@ -783,17 +707,6 @@ h1, h2, h3, h4 {
 
     .section-title {
         font-size: 2rem;
-    }
-    
-    .menu-item {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .menu-item-image {
-        width: 100%;
-        height: 200px;
-        margin: 0 auto;
     }
 
     .delivery-options {
@@ -818,10 +731,6 @@ h1, h2, h3, h4 {
 
     .contact-grid {
         grid-template-columns: 1fr 1fr;
-    }
-
-    .menu-items {
-        grid-template-columns: repeat(2, 1fr);
     }
 
     .footer-content {
@@ -866,11 +775,6 @@ h1, h2, h3, h4 {
 
     .contact-details {
         grid-template-columns: repeat(2, 1fr);
-    }
-
-    .menu-items {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 3rem;
     }
 
     .footer-content {
