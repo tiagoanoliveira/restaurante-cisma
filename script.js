@@ -1,4 +1,4 @@
-// ===== FUNÇÕES UTILITÁRIAS (DRY - Don't Repeat Yourself) =====
+// ===== FUNÇÕES UTILITÁRIAS
 function loadHTML(id, url) {
     fetch(url)
     .then(response => {
@@ -38,7 +38,7 @@ function loadFeaturedMenuItems() {
 function loadAllMenuItems() {
     const container = document.getElementById('all-menu-items');
     if (container) {
-        fetch('/menu/menu.html')
+        fetch('../menu/menu.html')
         .then(response => response.text())
         .then(html => {
             container.innerHTML = html;
@@ -49,11 +49,18 @@ function loadAllMenuItems() {
     }
 }
 
-// ===== INICIALIZAÇÃO AUTOMÁTICA =====
+// ===== INICIALIZAÇÃO =====
 function initializePage() {
-    // Carregar header e footer (presente em todas as páginas)
-    loadHTML('header-placeholder', '../headers/header.html');
-    loadHTML('footer-placeholder', '../headers/footer.html');
+    // Detectar se está na raiz ou numa subpasta
+    const isRoot = window.location.pathname === '/' || 
+                   window.location.pathname.endsWith('/index.html') ||
+                   !window.location.pathname.includes('/menu/');
+    
+    const headerPath = isRoot ? './headers/header.html' : '../headers/header.html';
+    const footerPath = isRoot ? './headers/footer.html' : '../headers/footer.html';
+    
+    loadHTML('header-placeholder', headerPath);
+    loadHTML('footer-placeholder', footerPath);
     
     // Carregar menu conforme a página
     const featuredContainer = document.getElementById('featured-menu-items');
@@ -68,7 +75,6 @@ function initializePage() {
     }
 }
 
-// ===== CÓDIGO PRINCIPAL SIMPLIFICADO =====
 class CismaWebsite {
     constructor() {
         this.navbar = document.getElementById('navbar');
