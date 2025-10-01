@@ -8,12 +8,36 @@ function loadHTML(id, url) {
         return response.text();
     })
     .then(data => {
-        document.getElementById(id).innerHTML = data;
+        const element = document.getElementById(id);
+        element.innerHTML = data;
+        
+        // Ajustar caminhos relativos se estiver numa subpasta
+        const currentPath = window.location.pathname;
+        const isInSubfolder = currentPath.includes('/menu/') || currentPath.includes('/privacy');
+        
+        if (isInSubfolder) {
+            // Ajustar imagens
+            element.querySelectorAll('img').forEach(img => {
+                const src = img.getAttribute('src');
+                if (src && src.startsWith('./')) {
+                    img.setAttribute('src', '../' + src.substring(2));
+                }
+            });
+            
+            // Ajustar links
+            element.querySelectorAll('a').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && href.startsWith('./') && !href.startsWith('#')) {
+                    link.setAttribute('href', '../' + href.substring(2));
+                }
+            });
+        }
     })
     .catch(error => {
         console.error(error);
     });
 }
+
 
 function loadFeaturedMenuItems() {
     fetch('./menu/menu.html')
