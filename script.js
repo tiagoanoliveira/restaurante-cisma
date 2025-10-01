@@ -52,8 +52,8 @@ function loadAllMenuItems() {
 // ===== INICIALIZAÇÃO AUTOMÁTICA =====
 function initializePage() {
     // Carregar header e footer (presente em todas as páginas)
-    loadHTML('header-placeholder', '/headers/header.html');
-    loadHTML('footer-placeholder', '/headers/footer.html');
+    loadHTML('header-placeholder', './headers/header.html');
+    loadHTML('footer-placeholder', './headers/footer.html');
     
     // Carregar menu conforme a página
     const featuredContainer = document.getElementById('featured-menu-items');

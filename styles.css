@@ -1,5 +1,5 @@
-@import url("/menu/menu.css");
-@import url("/headers/headers.css");
+@import url("./menu/menu.css");
+@import url("./headers/headers.css");
 
 /* CSS Reset and Base Styles */
 * {
