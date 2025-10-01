@@ -51,14 +51,21 @@ function loadAllMenuItems() {
 
 // ===== INICIALIZAÇÃO =====
 function initializePage() {
-    // Detectar se está na raiz ou numa subpasta
-    const isRoot = window.location.pathname === '/' || 
-                   window.location.pathname.endsWith('/index.html') ||
-                   !window.location.pathname.includes('/menu/');
+    // Detectar se está na pasta menu através do pathname
+    const currentPath = window.location.pathname;
+    const isInMenuFolder = currentPath.includes('/menu/') || currentPath.endsWith('/menu');
     
-    const headerPath = isRoot ? './headers/header.html' : '../headers/header.html';
-    const footerPath = isRoot ? './headers/footer.html' : '../headers/footer.html';
+    console.log('Current pathname:', currentPath);
+    console.log('Is in menu folder:', isInMenuFolder);
     
+    // Definir caminhos corretos baseado na localização
+    const headerPath = isInMenuFolder ? '../headers/header.html' : './headers/header.html';
+    const footerPath = isInMenuFolder ? '../headers/footer.html' : './headers/footer.html';
+    
+    console.log('Header path:', headerPath);
+    console.log('Footer path:', footerPath);
+    
+    // Carregar header e footer
     loadHTML('header-placeholder', headerPath);
     loadHTML('footer-placeholder', footerPath);
     
@@ -74,6 +81,7 @@ function initializePage() {
         loadAllMenuItems();
     }
 }
+
 
 class CismaWebsite {
     constructor() {
