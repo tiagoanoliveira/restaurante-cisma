@@ -78,6 +78,20 @@ h1, h2, h3, h4 {
     background: linear-gradient(90deg, var(--champagne), var(--champagne-dark));
 }
 
+/*Policy page*/
+.policy-text{
+    text-align: justify;
+}
+
+.policy-text .section-title {
+    margin-top: 4rem;
+}
+
+.policy-text p{
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
 /* Hero Section */
 .hero {
     position: relative;
@@ -459,6 +473,12 @@ h1, h2, h3, h4 {
     box-shadow: 0 10px 30px rgba(44, 93, 90, 0.2);
 }
 
+.contact-grid .section-title {
+    margin-bottom: 2rem;
+    grid-column: 1 / -1;
+}
+
+
 /* Mobile Navigation */
 @media (max-width: 500px) {
     .hero-title {
@@ -560,7 +580,6 @@ h1, h2, h3, h4 {
 
     .contact-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 2rem;
     }
 
     .contact-details {
@@ -609,3 +628,4 @@ img {
         line-height: 1.4;
     }
 }
+
