@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Restaurante CISMA Matosinhos</title>
+        <link rel="shortcut icon" href="resources/images/restaurant/logo-square.jpg">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -12,7 +13,7 @@
     </head>
     <body>
         <!-- Header -->
-        <div id="header-placeholder"></div>
+        <header id="header-placeholder"></header>
         <!-- Hero Section -->
         <section id="home" class="hero">
             <div class="hero-background" id="hero-bg">
@@ -121,7 +122,7 @@
                 <h2 class="section-title">Entrega e Take-Away</h2>
                 <p>Desfrute dos nossos pratos no conforto da sua casa</p>
                 <div class="delivery-options">
-                    <a href="#" class="delivery-option">
+                    <a href="https://www.ubereats.com/pt/store/cisma/mb4kjrfcR8CUdDqsyzKLxw?srsltid=AfmBOopfcVpnuPUH-lE8_U_YrLPD7C_8OnSSr4GC4Es7mHYeC5X3szrD" class="delivery-option">
                         <img src="resources/images/delivery/uber-eats.svg" alt="Uber Eats" class="delivery-logo">
                         <span>Pedir no Uber Eats</span>
                     </a>
@@ -177,44 +178,5 @@
         <footer id="footer-placeholder"></footer>
         <script src="script.js"></script>
     </body>
-
-    <script>
-        function loadHTML(id, url) {
-            fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Falha ao carregar o arquivo: ' + url);
-                }
-                return response.text();
-            })
-            .then(data => {
-                document.getElementById(id).innerHTML = data;
-            })
-            .catch(error => {
-                console.error(error);
-            });
-        }
-        function loadFeaturedMenuItems() {
-        fetch('menu/menu.html')
-        .then(response => response.text())
-        .then(html => {
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = html;
-            
-            // Filtrar apenas itens com data-featured="true"
-            const featuredItems = tempDiv.querySelectorAll('.menu-item[data-top="true"]');
-            const container = document.getElementById('featured-menu-items');
-            
-            featuredItems.forEach(item => {
-                container.appendChild(item.cloneNode(true));
-            });
-        })
-        .catch(error => {
-            console.error('Erro ao carregar itens do menu:', error);
-        });
-    }
-        loadHTML('header-placeholder', 'headers/header.html');
-        loadHTML('footer-placeholder', 'headers/footer.html');
-        loadFeaturedMenuItems();
-    </script>
+    <script src="/script.js"></script>
 </html>
