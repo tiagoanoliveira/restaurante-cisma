@@ -49,19 +49,21 @@ function loadFeaturedMenuItems() {
         
         if (container) {
             featuredItems.forEach(item => {
-                // Clonar o item
-                const clonedItem = item.cloneNode(true);
-                
-                // Ajustar caminhos das imagens (página principal usa ./menu/)
-                clonedItem.querySelectorAll('img').forEach(img => {
+                // Ajustar caminhos das imagens antes de adicionar ao DOM
+                const images = item.querySelectorAll('img');
+                images.forEach(img => {
                     const src = img.getAttribute('src');
-                    if (src && src.startsWith('./resources/')) {
-                        // Na página principal, não precisa ajustar
-                        img.setAttribute('src', src);
+                    // Se a imagem está em ../menu/plates/, mudar para ./menu/plates/
+                    if (src && src.startsWith('../menu/plates/')) {
+                        img.setAttribute('src', src.replace('../menu/plates/', './menu/plates/'));
+                    }
+                    // Se a imagem está em ./plates/, mudar para ./menu/plates/
+                    else if (src && src.startsWith('./plates/')) {
+                        img.setAttribute('src', src.replace('./plates/', './menu/plates/'));
                     }
                 });
                 
-                container.appendChild(clonedItem);
+                container.appendChild(item.cloneNode(true));
             });
         }
     })
@@ -69,6 +71,7 @@ function loadFeaturedMenuItems() {
         console.error('Erro ao carregar itens do menu:', error);
     });
 }
+
 
 function loadAllMenuItems() {
     const container = document.getElementById('all-menu-items');
@@ -80,14 +83,15 @@ function loadAllMenuItems() {
             tempDiv.innerHTML = html;
             
             // Ajustar caminhos das imagens para a página do menu
-            tempDiv.querySelectorAll('img').forEach(img => {
+            const images = tempDiv.querySelectorAll('img');
+            images.forEach(img => {
                 const src = img.getAttribute('src');
-                if (src && src.startsWith('./resources/')) {
-                    img.setAttribute('src', '../' + src.substring(2));
-                } else if (src && src.startsWith('./menu/')) {
-                    // Se começar com ./menu/, remover essa parte
-                    img.setAttribute('src', '../' + src.substring(7));
+                // Se a imagem está em ./menu/plates/, mudar para ./plates/
+                if (src && src.startsWith('./menu/plates/')) {
+                    img.setAttribute('src', src.replace('./menu/plates/', './plates/'));
                 }
+                // Se a imagem está em ../menu/plates/, manter como está (já correto)
+                // Se a imagem está em ./plates/, já está correto
             });
             
             container.innerHTML = tempDiv.innerHTML;
@@ -97,6 +101,7 @@ function loadAllMenuItems() {
         });
     }
 }
+
 
 // ===== INICIALIZAÇÃO =====
 function initializePage() {
@@ -130,6 +135,7 @@ function initializePage() {
         loadAllMenuItems();
     }
 }
+
 
 class CismaWebsite {
     constructor() {
