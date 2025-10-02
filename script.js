@@ -13,7 +13,7 @@ function loadHTML(id, url) {
         
         // Ajustar caminhos relativos se estiver numa subpasta
         const currentPath = window.location.pathname;
-        const isInSubfolder = currentPath.includes('/menu/') || currentPath.includes('/privacy');
+        const isInSubfolder = /\/[^\/]+\/[^\/]*$/.test(currentPath);
         
         if (isInSubfolder) {
             // Ajustar imagens
@@ -105,37 +105,27 @@ function loadAllMenuItems() {
 
 // ===== INICIALIZAÇÃO =====
 function initializePage() {
-    // Detectar se está na pasta menu através do pathname
+    // Detecta se está no nível raiz ou numa subpasta
     const currentPath = window.location.pathname;
-    const isInMenuFolder = currentPath.includes('/menu/') || currentPath.endsWith('/menu');
-    
-    console.log('Current pathname:', currentPath);
-    console.log('Is in menu folder:', isInMenuFolder);
-    
-    // Definir caminhos corretos baseado na localização
-    const headerPath = isInMenuFolder ? '../headers/header.html' : './headers/header.html';
-    const footerPath = isInMenuFolder ? '../headers/footer.html' : './headers/footer.html';
-    
-    console.log('Header path:', headerPath);
-    console.log('Footer path:', footerPath);
-    
-    // Carregar header e footer
+    // Verifica se está ao nível do menu OU numa subpasta qualquer (como privacy)
+    const inSubFolder = /\/[^\/]+\/[^\/]*$/.test(currentPath);
+
+    const headerPath = inSubFolder ? '../headers/header.html' : './headers/header.html';
+    const footerPath = inSubFolder ? '../headers/footer.html' : './headers/footer.html';
+
     loadHTML('header-placeholder', headerPath);
     loadHTML('footer-placeholder', footerPath);
-    
-    // Carregar menu conforme a página
+
     const featuredContainer = document.getElementById('featured-menu-items');
     const allMenuContainer = document.getElementById('all-menu-items');
     
     if (featuredContainer) {
         loadFeaturedMenuItems();
     }
-    
     if (allMenuContainer) {
         loadAllMenuItems();
     }
 }
-
 
 class CismaWebsite {
     constructor() {
