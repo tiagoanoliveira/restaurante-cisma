@@ -38,7 +38,6 @@ function loadHTML(id, url) {
     });
 }
 
-
 function loadFeaturedMenuItems() {
     fetch('./menu/menu.html')
     .then(response => response.text())
@@ -50,7 +49,19 @@ function loadFeaturedMenuItems() {
         
         if (container) {
             featuredItems.forEach(item => {
-                container.appendChild(item.cloneNode(true));
+                // Clonar o item
+                const clonedItem = item.cloneNode(true);
+                
+                // Ajustar caminhos das imagens (página principal usa ./menu/)
+                clonedItem.querySelectorAll('img').forEach(img => {
+                    const src = img.getAttribute('src');
+                    if (src && src.startsWith('./resources/')) {
+                        // Na página principal, não precisa ajustar
+                        img.setAttribute('src', src);
+                    }
+                });
+                
+                container.appendChild(clonedItem);
             });
         }
     })
@@ -65,7 +76,21 @@ function loadAllMenuItems() {
         fetch('../menu/menu.html')
         .then(response => response.text())
         .then(html => {
-            container.innerHTML = html;
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            
+            // Ajustar caminhos das imagens para a página do menu
+            tempDiv.querySelectorAll('img').forEach(img => {
+                const src = img.getAttribute('src');
+                if (src && src.startsWith('./resources/')) {
+                    img.setAttribute('src', '../' + src.substring(2));
+                } else if (src && src.startsWith('./menu/')) {
+                    // Se começar com ./menu/, remover essa parte
+                    img.setAttribute('src', '../' + src.substring(7));
+                }
+            });
+            
+            container.innerHTML = tempDiv.innerHTML;
         })
         .catch(error => {
             console.error('Erro ao carregar itens do menu:', error);
@@ -105,7 +130,6 @@ function initializePage() {
         loadAllMenuItems();
     }
 }
-
 
 class CismaWebsite {
     constructor() {
