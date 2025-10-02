@@ -11,11 +11,11 @@ function loadHTML(id, url) {
         const element = document.getElementById(id);
         element.innerHTML = data;
         
-        // Ajustar caminhos relativos se estiver numa subpasta
+        // Ajustar caminhos relativos SE E SÓ SE estiver na pasta /menu/
         const currentPath = window.location.pathname;
-        const isInSubfolder = /\/[^\/]+\/[^\/]*$/.test(currentPath);
-        
-        if (isInSubfolder) {
+        const isInMenu = currentPath.includes('/menu/');
+
+        if (isInMenu) {
             // Ajustar imagens
             element.querySelectorAll('img').forEach(img => {
                 const src = img.getAttribute('src');
@@ -23,7 +23,7 @@ function loadHTML(id, url) {
                     img.setAttribute('src', '../' + src.substring(2));
                 }
             });
-            
+
             // Ajustar links
             element.querySelectorAll('a').forEach(link => {
                 const href = link.getAttribute('href');
@@ -105,26 +105,22 @@ function loadAllMenuItems() {
 
 // ===== INICIALIZAÇÃO =====
 function initializePage() {
-    // Detecta se está no nível raiz ou numa subpasta
     const currentPath = window.location.pathname;
-    // Verifica se está ao nível do menu OU numa subpasta qualquer (como privacy)
-    const inSubFolder = /\/[^\/]+\/[^\/]*$/.test(currentPath);
 
-    const headerPath = inSubFolder ? '../headers/header.html' : './headers/header.html';
-    const footerPath = inSubFolder ? '../headers/footer.html' : './headers/footer.html';
+    // Está numa subpasta tipo /menu/alguma-coisa.html
+    const isInMenu = currentPath.includes('/menu/');
+    // Se for na raiz (ex: /index.html ou /privacy.html)
+    const headerPath = isInMenu ? '../headers/header.html' : './headers/header.html';
+    const footerPath = isInMenu ? '../headers/footer.html' : './headers/footer.html';
 
     loadHTML('header-placeholder', headerPath);
     loadHTML('footer-placeholder', footerPath);
 
     const featuredContainer = document.getElementById('featured-menu-items');
     const allMenuContainer = document.getElementById('all-menu-items');
-    
-    if (featuredContainer) {
-        loadFeaturedMenuItems();
-    }
-    if (allMenuContainer) {
-        loadAllMenuItems();
-    }
+
+    if (featuredContainer) loadFeaturedMenuItems();
+    if (allMenuContainer) loadAllMenuItems();
 }
 
 class CismaWebsite {
