@@ -37,6 +37,7 @@ function loadHTML(id, url) {
         console.error(error);
     });
 }
+
 function loadFeaturedMenuItems() {
     fetch('./menu/menu.html')
     .then(response => response.text())
@@ -48,6 +49,20 @@ function loadFeaturedMenuItems() {
         
         if (container) {
             featuredItems.forEach(item => {
+                // Ajustar caminhos das imagens antes de adicionar ao DOM
+                const images = item.querySelectorAll('img');
+                images.forEach(img => {
+                    const src = img.getAttribute('src');
+                    // Se a imagem está em ../menu/plates/, mudar para ./menu/plates/
+                    if (src && src.startsWith('../menu/plates/')) {
+                        img.setAttribute('src', src.replace('../menu/plates/', './menu/plates/'));
+                    }
+                    // Se a imagem está em ./plates/, mudar para ./menu/plates/
+                    else if (src && src.startsWith('./plates/')) {
+                        img.setAttribute('src', src.replace('./plates/', './menu/plates/'));
+                    }
+                });
+                
                 container.appendChild(item.cloneNode(true));
             });
         }
@@ -57,19 +72,36 @@ function loadFeaturedMenuItems() {
     });
 }
 
+
 function loadAllMenuItems() {
     const container = document.getElementById('all-menu-items');
     if (container) {
-        fetch('./menu.html')  // Caminho relativo à página atual
+        fetch('../menu/menu.html')
         .then(response => response.text())
         .then(html => {
-            container.innerHTML = html;
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            
+            // Ajustar caminhos das imagens para a página do menu
+            const images = tempDiv.querySelectorAll('img');
+            images.forEach(img => {
+                const src = img.getAttribute('src');
+                // Se a imagem está em ./menu/plates/, mudar para ./plates/
+                if (src && src.startsWith('./menu/plates/')) {
+                    img.setAttribute('src', src.replace('./menu/plates/', './plates/'));
+                }
+                // Se a imagem está em ../menu/plates/, manter como está (já correto)
+                // Se a imagem está em ./plates/, já está correto
+            });
+            
+            container.innerHTML = tempDiv.innerHTML;
         })
         .catch(error => {
             console.error('Erro ao carregar itens do menu:', error);
         });
     }
 }
+
 
 // ===== INICIALIZAÇÃO =====
 function initializePage() {
