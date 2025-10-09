@@ -351,6 +351,112 @@ h1, h2, h3, h4 {
     transform: scale(1.05);
 }
 
+/* Reviews Section */
+.reviews {
+    padding: var(--section-padding);
+    background: var(--champagne);
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.review-widget {
+    background: var(--white);
+    border-radius: 15px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 10px 30px rgba(44, 93, 90, 0.1);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.review-widget:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(44, 93, 90, 0.15);
+}
+
+.review-header {
+    margin-bottom: 1.2rem;
+}
+
+.review-logo {
+    height: 40px;
+    width: auto;
+}
+
+.review-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.review-rating {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.rating-number {
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: var(--shark-green-dark);
+    line-height: 0.7;
+}
+
+.stars {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.star {
+    font-size: 1.5rem;
+    color: #ddd;
+}
+
+.star.filled {
+    color: #FFB800;
+}
+
+.star.half {
+    background: linear-gradient(90deg, #FFB800 50%, #ddd 50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.review-count {
+    font-size: 0.8rem;
+    color: #666;
+    margin: 0;
+}
+
+.btn-review {
+    background: transparent;
+    color: var(--shark-green);
+    border: 2px solid var(--shark-green);
+    padding: 0.75rem 1.5rem;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+}
+
+.btn-review:hover {
+    background: var(--shark-green);
+    color: var(--white);
+}
+
+/* Tablet and Desktop */
+@media (min-width: 501px) {
+    .reviews-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 /* Reservations Section */
 .reservations {
     padding: var(--section-padding);
