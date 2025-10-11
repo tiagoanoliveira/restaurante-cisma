@@ -366,7 +366,6 @@ h1, h2, h3, h4 {
 .reservations p {
     font-size: 1.1rem;
     margin-bottom: 2rem;
-    opacity: 0.9;
 }
 
 .reservation-widget {
@@ -493,10 +492,12 @@ h1, h2, h3, h4 {
 }
 
 .delivery-options {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     justify-content: center;
+    max-width: 600px;
     gap: 2rem;
-    flex-wrap: wrap;
+    margin: 0 auto;
 }
 
 .delivery-option {
@@ -520,7 +521,7 @@ h1, h2, h3, h4 {
 }
 
 .delivery-logo {
-    height: 40px;
+    height: 120px;
     width: auto;
 }
 
@@ -622,18 +623,19 @@ h1, h2, h3, h4 {
         font-size: 2rem;
     }
 
-    .delivery-options {
-        flex-direction: column;
-        align-items: center;
-    }
     .contact-map {
         height: 300px;
+    }
+    .reservations p {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
     }
     .review-logo {
         height: 35px;
     }
+
     .review-widget{
-        padding: 30px 15px 20px;
+        padding: 25px 15px 20px;
     }
     .reviews .btn{
         width: 100%;
@@ -646,6 +648,20 @@ h1, h2, h3, h4 {
     }
     .review-count {
         padding: 7px;
+    }
+    .reviews-grid{
+        gap: 0.8rem;
+    }
+    .delivery-logo {
+        height: 100px;
+        width: auto;
+    }
+    .delivery-option {
+        padding: 1rem;
+    }
+    .delivery p {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
     }
 }
 
