@@ -351,6 +351,37 @@ h1, h2, h3, h4 {
     transform: scale(1.05);
 }
 
+/* Reservations Section */
+.reservations {
+    padding: var(--section-padding);
+    background: var(--shark-green);
+    color: var(--white);
+    text-align: center;
+}
+
+.reservations .section-title {
+    color: var(--champagne);
+}
+
+.reservations p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.reservation-widget {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    margin-top: 2rem;
+}
+
+.widget-placeholder {
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
 /* Reviews Section */
 .reviews {
     padding: var(--section-padding);
@@ -359,9 +390,9 @@ h1, h2, h3, h4 {
 
 .reviews-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
-    max-width: 800px;
+    max-width: 600px;
     margin: 0 auto;
 }
 
@@ -392,7 +423,6 @@ h1, h2, h3, h4 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
 }
 
 .review-rating {
@@ -424,7 +454,7 @@ h1, h2, h3, h4 {
 }
 
 .star.half {
-    background: linear-gradient(90deg, #FFB800 50%, #ddd 50%);
+    background: linear-gradient(90deg, #FFB800 60%, #ddd 50%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -434,13 +464,13 @@ h1, h2, h3, h4 {
     font-size: 0.8rem;
     color: #666;
     margin: 0;
+    padding: 10px;
 }
 
 .btn-review {
     background: transparent;
     color: var(--shark-green);
     border: 2px solid var(--shark-green);
-    padding: 0.75rem 1.5rem;
     font-size: 0.8rem;
     margin-top: 0.3rem;
 }
@@ -448,44 +478,6 @@ h1, h2, h3, h4 {
 .btn-review:hover {
     background: var(--shark-green);
     color: var(--white);
-}
-
-/* Tablet and Desktop */
-@media (min-width: 501px) {
-    .reviews-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/* Reservations Section */
-.reservations {
-    padding: var(--section-padding);
-    background: var(--shark-green);
-    color: var(--white);
-    text-align: center;
-}
-
-.reservations .section-title {
-    color: var(--champagne);
-}
-
-.reservations p {
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
-    opacity: 0.9;
-}
-
-.reservation-widget {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 2rem;
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
-    margin-top: 2rem;
-}
-
-.widget-placeholder {
-    font-style: italic;
-    margin-bottom: 1rem;
 }
 
 /* Delivery Section */
@@ -636,6 +628,24 @@ h1, h2, h3, h4 {
     }
     .contact-map {
         height: 300px;
+    }
+    .review-logo {
+        height: 35px;
+    }
+    .review-widget{
+        padding: 30px 15px 20px;
+    }
+    .reviews .btn{
+        width: 100%;
+        max-width: 200px;
+        font-size: 10px;
+        padding: 10px;
+    }
+    .rating-number {
+        font-size: 30px;
+    }
+    .review-count {
+        padding: 7px;
     }
 }
 
