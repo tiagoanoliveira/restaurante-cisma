@@ -1,6 +1,3 @@
-@import url("./menu/menu.css");
-@import url("./headers/headers.css");
-
 /* CSS Reset and Base Styles */
 * {
     margin: 0;
@@ -55,12 +52,15 @@ body {
 /* Typography */
 h1, h2, h3, h4 {
     font-family: var(--font-primary);
-    line-height: 1.2;
     color: var(--shark-green-dark);
 }
 
+h2 {
+    font-size: 2rem;
+}
+
 .section-title {
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 5vw, 2.5rem);
     text-align: center;
     margin-bottom: 3rem;
     font-weight: 700;
@@ -138,7 +138,7 @@ h1, h2, h3, h4 {
 }
 
 .hero-title {
-    font-size: 4rem;
+    font-size: clamp(3rem, 8vw, 4rem);
     font-weight: 700;
     color: var(--champagne);
     margin-bottom: 0.5rem;
@@ -268,6 +268,14 @@ h1, h2, h3, h4 {
     display: inline-block;
 }
 
+/* Acessibilidade: foco visível somente para teclado */
+.btn:focus-visible,
+.nav-link:focus-visible,
+.filter-btn:focus-visible {
+    outline: 3px solid var(--champagne);
+    outline-offset: 4px;
+}
+
 /* Story Section */
 .story {
     padding: var(--section-padding);
@@ -350,6 +358,68 @@ h1, h2, h3, h4 {
 .gallery-item:hover img {
     transform: scale(1.05);
 }
+/* Slider mobile (oculto por defeito) */
+.gallery-slider {
+    display: none;
+    position: relative;
+    width: 100%;
+}
+
+/* Faixa de slides com scroll snap (suporte nativo a swipe) */
+.gallery-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    gap: 0;
+}
+
+.gallery-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    position: relative;
+    scroll-snap-align: center;
+}
+
+.gallery-slide img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Setas laterais */
+.gallery-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    background: rgba(44, 93, 90, 0.8);
+    color: #FFF;
+    border: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    cursor: pointer;
+    line-height: 42px;
+    text-align: center;
+    font-size: 26px;
+    padding: 0;
+    transition: opacity .2s;
+}
+
+.gallery-nav.prev { 
+    left: 8px; 
+}
+.gallery-nav.next { 
+    right: 8px; 
+}
+
+.gallery-nav:focus-visible {
+  outline: 3px solid var(--champagne);
+  outline-offset: 2px;
+}
 
 /* Reservations Section */
 .reservations {
@@ -381,109 +451,12 @@ h1, h2, h3, h4 {
     margin-bottom: 1rem;
 }
 
-/* Reviews Section */
-.reviews {
-    padding: var(--section-padding);
-    background: var(--champagne);
-}
-
-.reviews-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.review-widget {
-    background: var(--white);
-    border-radius: 15px;
-    padding: 2.5rem 2rem;
-    box-shadow: 0 10px 30px rgba(44, 93, 90, 0.1);
-    text-align: center;
-    transition: var(--transition);
-}
-
-.review-widget:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(44, 93, 90, 0.15);
-}
-
-.review-header {
-    margin-bottom: 1.2rem;
-}
-
-.review-logo {
-    height: 40px;
-    width: auto;
-}
-
-.review-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.review-rating {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.3rem;
-}
-
-.rating-number {
-    font-size: 2.5rem;
-    font-weight: 500;
-    color: var(--shark-green-dark);
-    line-height: 0.7;
-}
-
-.stars {
-    display: flex;
-    gap: 0.25rem;
-}
-
-.star {
-    font-size: 1.5rem;
-    color: #ddd;
-}
-
-.star.filled {
-    color: #FFB800;
-}
-
-.star.half {
-    background: linear-gradient(90deg, #FFB800 60%, #ddd 50%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.review-count {
-    font-size: 0.8rem;
-    color: #666;
-    margin: 0;
-    padding: 10px;
-}
-
-.btn-review {
-    background: transparent;
-    color: var(--shark-green);
-    border: 2px solid var(--shark-green);
-    font-size: 0.8rem;
-    margin-top: 0.3rem;
-}
-
-.btn-review:hover {
-    background: var(--shark-green);
-    color: var(--white);
-}
-
 /* Delivery Section */
 .delivery {
     padding: var(--section-padding);
     background: var(--white);
-    text-align: center;
+    display: flex;
+    align-items: center;
 }
 
 .delivery p {
@@ -581,7 +554,7 @@ h1, h2, h3, h4 {
 /* Mobile Navigation */
 @media (max-width: 500px) {
     .hero-title {
-        font-size: 3rem;
+        font-size:  clamp(2.2rem, 8vw, 3.5rem);;
     }
 
     .hero-buttons {
@@ -602,14 +575,16 @@ h1, h2, h3, h4 {
         margin: 0 auto;
     }
 
-    .gallery-item img {
-        min-height: 200px;
-        object-fit: cover;
+    .gallery-grid { 
+        display: none; 
     }
-
-    .gallery-item.large img {
-        min-height: 300px;
+    .gallery-slider { 
+        display: block; 
     }
+    .gallery-slide img { 
+        height: 300px; 
+    }
+    
     .btn {
         width: 250px;
         max-width: 100%;
@@ -620,7 +595,7 @@ h1, h2, h3, h4 {
     }
 
     .section-title {
-        font-size: 2rem;
+        font-size: clamp(1.6rem, 5vw, 2.5rem);
     }
 
     .contact-map {
@@ -629,28 +604,6 @@ h1, h2, h3, h4 {
     .reservations p {
         font-size: 0.9rem;
         margin-bottom: 1rem;
-    }
-    .review-logo {
-        height: 35px;
-    }
-
-    .review-widget{
-        padding: 25px 15px 20px;
-    }
-    .reviews .btn{
-        width: 100%;
-        max-width: 200px;
-        font-size: 10px;
-        padding: 10px;
-    }
-    .rating-number {
-        font-size: 30px;
-    }
-    .review-count {
-        padding: 7px;
-    }
-    .reviews-grid{
-        gap: 0.8rem;
     }
     .delivery-logo {
         height: 100px;
@@ -750,7 +703,9 @@ img {
     .navbar,
     .scroll-indicator,
     .hero-buttons,
-    #delivery,
+    .menu,
+    .reviews,
+    .delivery,
     .footer-social {
         display: none;
     }
