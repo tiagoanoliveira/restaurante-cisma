@@ -486,6 +486,7 @@ h2 {
     transition: var(--transition);
     width: 100%;;
     max-width: 300px;
+    text-align: center;
 }
 
 .delivery-option:hover {
